@@ -4,7 +4,7 @@
 ## 1. Purpose
 This repository contains the web-based **Real Estate Management Service Portal** (سیستم مدیریت رهنمای معاملات). Its goal is to help real-estate offices in Afghanistan organize property listings, customer details, property-search requests, matching, visits, negotiations, and agreement records in one place.
 
-This file is the high-level project guide. Follow its goals, technical choices, and security rules when developing or changing the application. A feature listed below is a goal, not proof that it is already implemented.
+This file is the high-level project guide. Follow its goals, technical choices, and security rules when developing or changing the application. Read `system_design.md` for the full business workflows, proposed data model, architecture, matching rules, and implementation roadmap. A feature listed in either document is a goal, not proof that it is already implemented.
 
 **Important scope decision:** this is a property and customer management system, not an online payment platform. Do not implement online payments, payment gateways, or payment processing. Store property sale prices, rental prices, and customer budgets for searching and matching. Financial transaction/payment tracking is outside the current scope unless the project owner explicitly changes this requirement.
 
@@ -133,14 +133,14 @@ These are intended capabilities, not a claim that every module already exists. I
 
 ## 5. Technology Stack
 Use this stack unless a documented technical reason requires a change:
-- **PHP** for server-side logic.
-- **MySQL** for relational data storage.
+- **PHP 8.x** using a supported maintained release for server-side logic.
+- **MySQL** with InnoDB and `utf8mb4` for relational data storage.
 - **HTML5** for page structure.
 - **CSS3** for styling and responsive layouts.
 - **JavaScript** for browser-side interaction.
 - **jQuery** where it fits the existing codebase and is useful for AJAX or interface behavior.
 
-Prefer modular PHP code with shared configuration, database-access, authentication, authorization, validation, and layout components. Use Composer packages only when beneficial and maintainable. Keep local XAMPP development practical without preventing secure production hosting.
+Use **PDO** with prepared statements for database access. Prefer modular PHP code with shared configuration, database-access, authentication, authorization, validation, and layout components. Use UTF-8 end to end and MySQL `utf8mb4`. Use Composer packages only when beneficial and maintainable. Keep local XAMPP development practical without preventing secure production hosting. Follow the architecture and staged roadmap in `system_design.md`.
 
 ## 6. Language, Usability, and Interface
 - **The entire user-facing system must be in Persian (Dari/Farsi), with a right-to-left (RTL) interface by default.** This is a firm requirement, not an optional feature.
@@ -220,4 +220,5 @@ A task is complete when the requested behavior is implemented, existing behavior
 
 **Project name:** Real Estate Management Service Portal  
 **Dari/Persian name:** سیستم مدیریت رهنمای معاملات  
-**Repository:** https://github.com/ams-mas/real_state_management.git
+**Repository:** https://github.com/ams-mas/real_state_management.git  
+**Detailed system design:** `system_design.md`
