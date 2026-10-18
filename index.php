@@ -12,61 +12,24 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
 }
 
 $pages = [
-    'dashboard' => [
-        'title' => 'داشبورد',
-        'description' => 'نمای کلی سیستم مدیریت رهنمای معاملات',
-        'file' => __DIR__ . '/pages/dashboard.php',
-    ],
-    'properties' => [
-        'title' => 'املاک',
-        'description' => 'ثبت و مدیریت زمین، خانه، آپارتمان، دوکان و سایر املاک',
-        'file' => __DIR__ . '/pages/properties.php',
-    ],
-    'people' => [
-        'title' => 'اشخاص',
-        'description' => 'مدیریت مالکان، خریداران، فروشندگان، کرایه‌نشینان و مشتریان',
-        'file' => __DIR__ . '/pages/people.php',
-    ],
-    'sales' => [
-        'title' => 'ثبت فروش',
-        'description' => 'ثبت اطلاعات ملک فروخته‌شده و طرفین معامله',
-        'file' => __DIR__ . '/pages/sales.php',
-    ],
-    'purchases' => [
-        'title' => 'ثبت خرید',
-        'description' => 'ثبت اطلاعات ملک خریداری‌شده و طرفین معامله',
-        'file' => __DIR__ . '/pages/purchases.php',
-    ],
-    'requests' => [
-        'title' => 'درخواست‌های مشتریان',
-        'description' => 'ثبت درخواست خرید یا کرایه، حتی زمانی که ملک مناسب موجود نیست',
-        'file' => __DIR__ . '/pages/requests.php',
-    ],
-    'visits' => [
-        'title' => 'بازدیدها',
-        'description' => 'تنظیم و پیگیری بازدید مشتریان از املاک',
-        'file' => __DIR__ . '/pages/visits.php',
-    ],
-    'offers' => [
-        'title' => 'پیشنهادها و مذاکره',
-        'description' => 'ثبت پیشنهاد قیمت و پیگیری مذاکره‌ها',
-        'file' => __DIR__ . '/pages/offers.php',
-    ],
-    'agreements' => [
-        'title' => 'قراردادها',
-        'description' => 'ثبت اطلاعات توافق‌ها و قراردادهای خرید، فروش و کرایه',
-        'file' => __DIR__ . '/pages/agreements.php',
-    ],
-    'exchange-rates' => [
-        'title' => 'نرخ تبادله اسعار',
-        'description' => 'ثبت دستی نرخ اسعار و نگهداری تاریخچه نرخ‌ها',
-        'file' => __DIR__ . '/pages/exchange_rates.php',
-    ],
-    'users' => [
-        'title' => 'کاربران سیستم',
-        'description' => 'مدیریت کاربران و سطح دسترسی آن‌ها',
-        'file' => __DIR__ . '/pages/users.php',
-    ],
+    'dashboard' => ['title' => 'داشبورد', 'description' => 'نمای کلی وضعیت دفتر املاک', 'file' => __DIR__ . '/pages/dashboard.php'],
+    'properties' => ['title' => 'مدیریت املاک', 'description' => 'ثبت، جستجو و مدیریت جایدادها', 'file' => __DIR__ . '/pages/properties.php'],
+    'people' => ['title' => 'مدیریت مشتریان', 'description' => 'ثبت مالکان، خریداران، فروشندگان و متقاضیان', 'file' => __DIR__ . '/pages/people.php'],
+    'requests' => ['title' => 'درخواست‌های مشتریان', 'description' => 'نیازهای خرید، کرایه و گرویی مشتریان', 'file' => __DIR__ . '/pages/requests.php'],
+    'matching' => ['title' => 'جستجو و تطبیق املاک', 'description' => 'یافتن املاک مناسب برای درخواست‌های مشتریان', 'file' => __DIR__ . '/pages/matching.php'],
+    'visits' => ['title' => 'بازدید از املاک', 'description' => 'تنظیم و پیگیری بازدیدها', 'file' => __DIR__ . '/pages/visits.php'],
+    'transactions' => ['title' => 'معاملات', 'description' => 'ثبت نتیجه فروش، خرید، کرایه و گرویی', 'file' => __DIR__ . '/pages/transactions.php'],
+    'agreements' => ['title' => 'قراردادها', 'description' => 'ثبت، نگهداری و چاپ اطلاعات قراردادها', 'file' => __DIR__ . '/pages/agreements.php'],
+    'map' => ['title' => 'نقشه و موقعیت املاک', 'description' => 'مشاهده و انتخاب موقعیت املاک روی نقشه', 'file' => __DIR__ . '/pages/map.php'],
+    'documents' => ['title' => 'تصاویر و اسناد املاک', 'description' => 'آرشیف تصاویر، اسناد مالکیت و قراردادها', 'file' => __DIR__ . '/pages/documents.php'],
+    'reports' => ['title' => 'گزارش‌ها و آمار', 'description' => 'گزارش عملکرد دفتر و آمار املاک و معاملات', 'file' => __DIR__ . '/pages/reports.php'],
+    'users' => ['title' => 'کاربران و کارمندان', 'description' => 'مدیریت کاربران، نقش‌ها و مسئولیت‌ها', 'file' => __DIR__ . '/pages/users.php'],
+    'settings' => ['title' => 'تنظیمات سیستم', 'description' => 'تنظیمات دفتر، زبان، انواع ملک و امنیت', 'file' => __DIR__ . '/pages/settings.php'],
+    // Compatibility routes retained while the new workflow is developed.
+    'sales' => ['title' => 'ثبت فروش', 'description' => 'فرم قدیمی ثبت فروش', 'file' => __DIR__ . '/pages/sales.php'],
+    'purchases' => ['title' => 'درخواست خرید', 'description' => 'فرم درخواست خرید مشتری', 'file' => __DIR__ . '/pages/purchases.php'],
+    'offers' => ['title' => 'پیشنهادها و مذاکره', 'description' => 'ثبت پیشنهادها و پیگیری مذاکرات', 'file' => __DIR__ . '/pages/offers.php'],
+    'exchange-rates' => ['title' => 'نرخ تبادله اسعار', 'description' => 'ثبت دستی نرخ اسعار و تاریخچه آن', 'file' => __DIR__ . '/pages/exchange_rates.php'],
 ];
 
 $pageKey = isset($_GET['page']) && is_string($_GET['page']) ? $_GET['page'] : 'dashboard';
@@ -83,22 +46,16 @@ function e(string $value): string
 
 $navGroups = [
     'عمومی' => ['dashboard'],
-    'مدیریت معاملات' => ['properties', 'people', 'sales', 'purchases', 'requests', 'visits', 'offers', 'agreements'],
-    'تنظیمات سیستم' => ['exchange-rates', 'users'],
+    'مدیریت املاک و مشتریان' => ['properties', 'people', 'requests', 'matching', 'visits'],
+    'معاملات و اسناد' => ['transactions', 'agreements', 'map', 'documents', 'reports'],
+    'مدیریت سیستم' => ['users', 'settings'],
 ];
 
 $icons = [
-    'dashboard' => '▦',
-    'properties' => '⌂',
-    'people' => '♙',
-    'sales' => '↗',
-    'purchases' => '↙',
-    'requests' => '☷',
-    'visits' => '◷',
-    'offers' => '⇄',
-    'agreements' => '▤',
-    'exchange-rates' => '₨',
-    'users' => '⚙',
+    'dashboard' => '▦', 'properties' => '⌂', 'people' => '♙', 'requests' => '☷',
+    'matching' => '⌕', 'visits' => '◷', 'transactions' => '⇄', 'agreements' => '▤',
+    'map' => '⌖', 'documents' => '▧', 'reports' => '▥', 'users' => '♙', 'settings' => '⚙',
+    'sales' => '↗', 'purchases' => '↙', 'offers' => '⇄', 'exchange-rates' => '₨',
 ];
 ?>
 <!doctype html>
