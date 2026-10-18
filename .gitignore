@@ -3,4 +3,4 @@
 /config/database.local.php.tmp
 /.env
 /.env.*
-!/ .env.example
+!/.env.example
