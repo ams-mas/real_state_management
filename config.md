@@ -2,40 +2,47 @@
 # سیستم مدیریت رهنمای معاملات
 
 ## 1. Purpose
-This repository contains the web-based **Real Estate Management Service Portal** (سیستم مدیریت رهنمای معاملات). Its goal is to help a real-estate agency organize its day-to-day work, maintain consistent records, and manage property and client information in one place.
+This repository contains the web-based **Real Estate Management Service Portal** (سیستم مدیریت رهنمای معاملات). Its goal is to help real-estate offices in Afghanistan organize property listings, customer details, property-search requests, matching, visits, negotiations, and agreement records in one place.
 
 This file is the high-level project guide. Follow its goals, technical choices, and security rules when developing or changing the application. A feature listed below is a goal, not proof that it is already implemented.
 
+**Important scope decision:** this is a property and customer management system, not an online payment platform. Do not implement online payments, payment gateways, or payment processing. Store property sale prices, rental prices, and customer budgets for searching and matching. Financial transaction/payment tracking is outside the current scope unless the project owner explicitly changes this requirement.
+
 ## 2. Main Goals
 - Centralize property listings and property details.
-- Maintain records for property owners, buyers, renters, and other clients.
-- Record property sale, purchase, rental, and related transaction activity.
-- Track agreements, commissions, service fees, payments, receipts, and balances as required.
+- Maintain records for property owners, buyers, renters, landlords, and tenants.
+- Record whether a property is offered for sale or rent.
+- Record customer requests to buy or rent a property, including minimum and maximum budgets.
+- Match customer requests with available properties.
+- Track inquiries, viewings, offers, negotiations, and agreement status.
 - Make records easy to search, filter, review, and update.
 - Provide dashboards and reports for authorized staff.
 - Keep an audit trail for important actions.
-- Support secure backups and future deployment to online hosting.
+- Support secure backups and future deployment to secure online hosting.
 
 ## 3. Core Business Model and Workflows
 
 The system is designed for real-estate offices in Afghanistan. It must manage both **properties offered by owners** and **property-search requests from customers**. A customer may be an owner, seller, buyer, landlord, tenant, renter, or a person using multiple services. Do not force each customer into only one role.
 
 ### 3.1 Property Registration (ثبت ملک)
-Staff can register properties offered for sale, rent, or other services. Support land, houses, apartments, shops, markets, offices, warehouses, commercial buildings, and configurable additional types.
+Staff can register properties offered for sale or rent. Support land, houses, apartments, shops, markets, offices, warehouses, commercial buildings, and configurable additional types.
 
 Each property record should support:
 - A unique, human-readable property code.
-- Property type and intended transaction type (sale, rent, or other configured service).
+- Property type and listing purpose: For Sale or For Rent.
 - Province, district, city or village, neighborhood, and detailed location/landmark as applicable.
 - Owner(s) and their contact details, linked to customer records.
-- Asking sale price or rent amount, currency, payment terms, and negotiability where applicable.
+- **Asking sale price OR rental price**, depending on listing purpose.
+- Currency for the price, with Afghan Afghani (AFN) supported.
+- For rentals, the rental period/price basis (for example per month or per year) must be explicit.
+- Whether the asking price is negotiable.
 - Size and unit, rooms, floors, construction details, and property-specific attributes.
 - Photos, description, internal notes, and relevant documents.
 - Ownership/document verification status, who checked it, and when.
 - Staff member responsible, registration date, and record history.
 - Availability status such as Draft, Pending Verification, Available for Sale, Available for Rent, Reserved, Under Negotiation, Sold, Rented, Withdrawn, or Archived.
 
-Do not present a property as legally verified merely because a document was uploaded. Track what was checked and by whom; legal verification remains subject to the appropriate authority and process.
+Prices are listing information only. Recording a price must not trigger, collect, or process any payment. Do not present a property as legally verified merely because a document was uploaded. Track what was checked and by whom; legal verification remains subject to the appropriate authority and process.
 
 ### 3.2 Customer and Contact Management (مدیریت مشتریان)
 Maintain one customer profile per person or organization where practical. A customer can have multiple roles and multiple requests. Store only necessary information, restrict access, and avoid duplicate profiles.
@@ -47,45 +54,55 @@ Customers may ask the office to find something even when the office has no match
 
 A request can include:
 - Customer and assigned staff member.
-- Goal: buy, rent, sell through the office, lease out, or another configured service.
-- Desired property type, location/areas, budget range, currency, size, rooms, and other requirements.
-- For rentals, preferred rent period and relevant conditions.
+- Goal: Buy or Rent.
+- Desired property type and preferred locations/areas.
+- **Minimum and maximum customer budget**, currency, and rental price period where relevant.
+- Desired size, rooms, and other requirements.
+- For rentals, preferred rental period and relevant conditions.
 - Request date, urgency, follow-up date, notes, and contact history.
 - Status such as New, Contacted, Searching, Matches Found, Viewing Scheduled, Negotiating, Fulfilled, Cancelled, or Closed.
+
+For example, a customer who wants to buy a property may set a minimum budget of **2,000,000 AFN** and a maximum budget of **2,500,000 AFN**. Store these as numeric values with the currency recorded separately, not as free-text only. Show the range in a user-friendly local format. Do not assume an ambiguous phrase such as “2,000,000–2,500,000 lac AF” means millions or lakhs without confirming the intended amount; use clear AFN amounts in the form.
 
 One customer can have several active requests. Do not delete a request just because it is fulfilled or cancelled; retain its history according to the office's data-retention policy.
 
 ### 3.4 Property Matching and Viewings
-Allow staff to search and filter properties by type, transaction type, location, price/rent range, size, rooms, availability, and other attributes. Show possible matches for an active customer request. Matching can initially be rule-based filters; do not imply that a customer has been contacted simply because a match was displayed.
+Allow staff to search and filter properties by listing purpose, type, location, asking price/rent range, size, rooms, availability, and other attributes. Show possible matches for an active customer request.
+
+For sale requests, compare the customer's minimum and maximum purchase budget against the property's asking sale price. For rental requests, compare the budget against the rental price and the same rental period (for example, monthly budget against monthly rent). Do not compare different currencies or rental periods as if they were equivalent. If a listing's price is negotiable or just outside the budget, staff may optionally view it as a near match, clearly labeled as such.
+
+Matching can initially be rule-based filters; do not imply that a customer has been contacted simply because a match was displayed.
 
 Track each property presented to a customer, the date, staff member, customer feedback, viewing appointment, offer, negotiation notes, and next follow-up. Prevent unavailable properties from being treated as available matches.
 
 ### 3.5 Agreements and Transactions
-When parties agree to proceed, create a transaction linked to the relevant property, customers, request where applicable, and responsible staff member. Support sale and rental workflows separately where their fields differ.
+When parties agree to proceed, create a transaction or agreement record linked to the relevant property, customers, request where applicable, and responsible staff member. Support sale and rental workflows separately where their fields differ.
 
-Record parties, agreed price or rent, deposit, dates, duration and terms where applicable, office commission/service fee, agreement/document references, payment schedule, status, and notes. Keep a clear timeline from initial inquiry through viewing, negotiation, agreement, completion, cancellation, or dispute. Do not claim the system itself establishes legal ownership or replaces official registration.
+Record parties, agreed sale price or rent, rental period, relevant dates and terms, agreement/document references, status, and notes. These are records of an agreed deal, not online payment instructions. Keep a clear timeline from initial inquiry through viewing, negotiation, agreement, completion, cancellation, or dispute. Do not claim the system itself establishes legal ownership or replaces official registration.
 
-### 3.6 Office Finance
-Keep office income and property value separate. A property's sale price is not automatically money received by the real-estate office.
-
-Track commissions, service fees, customer payments to the office, receipts, expenses, refunds, outstanding balances, payment method, date, staff member, and related transaction. Make it clear who received or recorded money. Support partial payments and payment history. Corrections should be auditable rather than silently overwriting financial records.
+### 3.6 Explicitly Out of Scope: Online Payments and Payment Processing
+- Do not integrate payment gateways, online banking, card payments, wallets, or payment-provider APIs.
+- Do not collect or store bank/card credentials or payment-provider tokens.
+- Do not create online checkout, payment links, automatic money transfers, or payment processing workflows.
+- Property prices, rent prices, budgets, negotiated prices, and agreement amounts are informational records only.
+- The current system does not need a finance module for receiving payments, issuing payment receipts, tracking expenses, or calculating outstanding balances. Do not add these features unless the project owner explicitly requests a scope change.
+- If office commission or service-fee information is later requested, clarify whether the user only wants the fee amount recorded as information or wants broader financial bookkeeping before implementing it.
 
 ### 3.7 Follow-ups and Reminders
-Provide a task/follow-up list for customer calls, viewings, missing documents, pending offers, agreement dates, and outstanding office fees. Staff should be able to see their assigned work and overdue follow-ups. Avoid sending messages automatically unless a messaging service is explicitly configured and authorized.
+Provide a task/follow-up list for customer calls, viewings, missing documents, pending offers, and agreement dates. Staff should be able to see their assigned work and overdue follow-ups. Avoid sending messages automatically unless a messaging service is explicitly configured and authorized.
 
 ## 4. Planned Functional Modules
 Develop these modules based on requirements and the existing code:
-1. **Dashboard** — property availability, active requests, viewings, transactions, follow-ups, and financial summaries appropriate to the user's role.
-2. **Properties** — registration, search, photos, documents, owner links, verification state, and availability.
+1. **Dashboard** — available properties, active buy/rent requests, matches, viewings, pending negotiations, and follow-ups.
+2. **Properties** — registration, asking sale/rent price, photos, documents, owner links, verification state, and availability.
 3. **Customers** — contact profiles, roles, history, and linked records.
-4. **Customer Requests** — purchase/rental requirements, staff assignment, status, and follow-ups.
+4. **Customer Requests** — buy/rent requirements, minimum and maximum budget, currency, rental period, staff assignment, status, and follow-ups.
 5. **Matching and Viewings** — potential matches, property presentations, appointments, feedback, offers, and negotiations.
-6. **Agreements and Transactions** — sale/rental records, parties, terms, status, and document references.
-7. **Finance** — office commissions, service fees, receipts, payments, expenses, refunds, and balances.
-8. **Users and Roles** — staff accounts, permissions, and assignments.
-9. **Reports and Search** — date filters, available properties, active requests, conversions, transactions, commissions, outstanding fees, and printable reports.
-10. **Settings and Audit Log** — agency details, property categories, locations, currencies, fee rules, configurable options, and sensitive-action history.
-11. **Backup and Maintenance** — documented and tested backup and restoration procedures.
+6. **Agreements and Transactions** — sale/rental records, parties, agreed terms, status, and document references.
+7. **Users and Roles** — staff accounts, permissions, and assignments.
+8. **Reports and Search** — available properties, active requests, matching results, completed deals, and printable reports.
+9. **Settings and Audit Log** — agency details, property categories, locations, supported currencies, configurable options, and sensitive-action history.
+10. **Backup and Maintenance** — documented and tested backup and restoration procedures.
 
 These are intended capabilities, not a claim that every module already exists. Inspect the repository before implementing or changing a module.
 
@@ -109,7 +126,8 @@ Prefer modular PHP code with shared configuration, database-access, authenticati
 - Preserve working behavior and existing design conventions unless a change is requested.
 - Use human-readable property and transaction codes, but rely on database IDs/constraints for internal relationships.
 - Support Afghan location structures and local business terminology through configurable data rather than hard-coded assumptions.
-- Keep date, currency, and number formatting consistent and configurable.
+- Keep date, currency, and number formatting consistent and configurable. Support AFN and make the currency explicit.
+- For money amounts, use numeric database types appropriate for exact monetary values and store currency separately. Do not use floating-point types for money.
 
 ## 7. Required Security Rules
 Security must be considered in every feature, not added at the end.
@@ -125,22 +143,23 @@ Security must be considered in every feature, not added at the end.
 - Disable detailed error display in production. Log errors without exposing passwords, session tokens, SQL details, or private customer data.
 - Restrict and validate uploads (including property photos and documents): allow only required file types, check actual content and size, generate safe filenames, and prevent uploaded files from being executed.
 - Use HTTPS in production and keep PHP, database software, libraries, and server configuration updated.
-- Protect sensitive customer and financial information; collect only what the agency needs and restrict access appropriately.
-- Record important security and financial events in an audit log without logging secrets.
+- Protect sensitive customer and property information; collect only what the agency needs and restrict access appropriately.
+- Record important security events and sensitive changes in an audit log without logging secrets.
 - Before deleting or bulk-changing records, check authorization, require clear confirmation, and consider recovery. Do not add hidden destructive utilities.
 - Back up the database securely and test restoration. Backups may contain sensitive data and must be protected.
 - Review dependencies and never commit API keys, passwords, private keys, or real customer records.
 
 ## 8. Data Integrity and Database Design
 - Use suitable primary keys, foreign keys, indexes, and constraints.
-- Store dates, prices, fees, and transaction amounts using appropriate database types; do not use floating-point types for money.
-- Model properties, customers, requests, viewings, agreements, transactions, payments, and users as separate but connected records.
+- Model prices and budgets as numeric amounts with explicit currency and, for rental prices, an explicit time period.
+- Model properties, customers, requests, viewings, agreements, transactions, and users as separate but connected records.
 - One customer can have multiple roles and requests; one property can have multiple inquiries/viewings over time; one request can be matched to multiple properties; a transaction can link the relevant parties and property.
 - Use database transactions for operations that must succeed or fail as a unit.
 - Prevent duplicates through suitable validation and database constraints.
 - Use migrations or versioned SQL changes for database structure updates. Never silently drop tables or erase real data during an update.
 - Use fictional seed data only for development and testing. Never place actual client or agency data in the repository.
-- Preserve historical transaction and payment records; prefer status changes and audit entries over destructive deletion.
+- Preserve historical agreements and transaction records; prefer status changes and audit entries over destructive deletion.
+- Do not build online payment tables or payment-processing integrations for the current scope.
 
 ## 9. Development Workflow
 For every change:
