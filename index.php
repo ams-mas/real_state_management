@@ -424,6 +424,11 @@ $icons = [
         document.documentElement.dir = lang === 'en' ? 'ltr' : 'rtl';
         document.body.dir = lang === 'en' ? 'ltr' : 'rtl';
         if (languageSelect) languageSelect.value = lang;
+        const titleParts = document.title.split(' | ');
+        if (titleParts.length === 2 && lang !== 'fa') {
+            document.title = (translations[lang][titleParts[0]] || titleParts[0]) + ' | ' +
+                (translations[lang][titleParts[1]] || titleParts[1]);
+        }
         const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
         let node;
         while ((node = walker.nextNode())) translateTextNode(node, lang);
