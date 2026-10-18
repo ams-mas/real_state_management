@@ -100,10 +100,10 @@
         </div>
 
         <div class="sale-field full">
-            <label>موقعیت ملک در Google Maps</label>
+            <label>موقعیت ملک روی نقشه</label>
             <p class="sale-help">نام محل یا آدرس را در جستجو بنویسید و نتیجه را انتخاب کنید؛ همچنان می‌توانید مستقیماً روی نقشه کلیک کنید تا نشانگر موقعیت ملک جابه‌جا شود.</p>
             <div class="sale-map-search">
-                <input id="sale-map-search" type="search" placeholder="جستجوی آدرس یا نام محل در Google Maps" autocomplete="off" aria-label="جستجوی موقعیت ملک">
+                <input id="sale-map-search" type="search" placeholder="جستجوی آدرس یا نام محل" autocomplete="off" aria-label="جستجوی موقعیت ملک">
                 <button type="button" id="sale-map-search-button">جستجو</button>
             </div>
             <div id="saleMap" aria-label="نقشه انتخاب موقعیت ملک"></div>
@@ -119,7 +119,7 @@
                     <input id="sale-longitude" name="longitude" type="text" readonly placeholder="با انتخاب نقشه تکمیل می‌شود">
                 </div>
                 <div class="sale-field">
-                    <label for="sale-place-id">شناسه مکان Google</label>
+                    <label for="sale-place-id">شناسه مکان (در صورت موجود بودن)</label>
                     <input id="sale-place-id" name="google_place_id" type="text" readonly placeholder="در صورت موجود بودن">
                 </div>
             </div>
@@ -237,10 +237,9 @@
 
     if (window.L && document.getElementById('saleMap')) {
         map = L.map('saleMap').setView(defaultCenter, 12);
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
-            subdomains: 'abcd',
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap contributors</a> &copy; <a href="https://carto.com/attributions" target="_blank" rel="noopener noreferrer">CARTO</a>'
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap contributors</a>'
         }).addTo(map);
         marker = L.marker(defaultCenter, {draggable: true}).addTo(map);
         map.on('click', function (event) {
