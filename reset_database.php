@@ -47,8 +47,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             throw new RuntimeException('رمز عبور و تکرار آن یکسان نیست.');
         }
 
-        require __DIR__ . '/config/database.php';
-        if (!isset($pdo) || !$pdo instanceof PDO) {
+        $pdo = require __DIR__ . '/config/database.php';
+        if (!$pdo instanceof PDO) {
             throw new RuntimeException('اتصال پایگاه داده آماده نیست.');
         }
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
