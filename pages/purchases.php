@@ -1,35 +1,31 @@
 <?php
-// Included by index.php inside the shared main content area.
+// Customer purchase request form, rendered inside index.php.
 ?>
 <style>
-.tx-form{background:#fff;border:1px solid #e3e8ef;border-radius:14px;padding:24px}
-.tx-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
-.tx-field{display:flex;flex-direction:column;gap:8px}.tx-field.full{grid-column:1/-1}
-.tx-field label{color:#34465c;font-size:13px;font-weight:700}
-.tx-field input,.tx-field select,.tx-field textarea{width:100%;min-height:43px;padding:10px 12px;border:1px solid #d9e1eb;border-radius:8px;background:#fff;color:#172b42;font:inherit;font-size:13px}
-.tx-field textarea{min-height:90px;resize:vertical}.tx-title{margin:0 0 18px;font-size:15px}
-.tx-actions{display:flex;gap:10px;margin-top:22px}.tx-btn{border:0;border-radius:8px;padding:12px 22px;font:inherit;font-size:13px;cursor:pointer}
-.tx-primary{background:#2463a6;color:#fff}.tx-secondary{background:#edf1f6;color:#34465c}
-.tx-note{margin-bottom:18px;padding:12px 15px;border:1px solid #f1dfb2;background:#fff8e7;color:#77551a;border-radius:9px;font-size:12px;line-height:1.9}
-@media(max-width:650px){.tx-grid{grid-template-columns:1fr}.tx-field.full{grid-column:auto}.tx-form{padding:16px}}
+.pf{background:#fff;border:1px solid #e3e8ef;border-radius:14px;padding:24px}.pg{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.field{display:flex;flex-direction:column;gap:8px}.wide{grid-column:1/-1}.field label{font-size:13px;font-weight:bold;color:#34465c}.field input,.field select,.field textarea{width:100%;min-height:44px;padding:10px 12px;border:1px solid #d9e1eb;border-radius:8px;background:#fff;font:inherit;font-size:13px}.field textarea{min-height:85px}.locs{display:grid;gap:9px}.locrow{display:flex;gap:8px}.locrow input{flex:1;min-width:0}.btn{border:0;border-radius:8px;padding:11px 18px;font:inherit;font-size:13px;cursor:pointer}.primary{background:#2463a6;color:white}.secondary{background:#edf1f6;color:#34465c}.note{padding:12px 15px;margin-bottom:16px;background:#fff8e7;border:1px solid #f1dfb2;border-radius:9px;color:#77551a;font-size:12px;line-height:1.9}.add{background:#f0f6ff;color:#205a96;border:1px solid #b9cde5}.remove{background:#f8fafc;border:1px solid #e3e8ef;color:#526277}@media(max-width:650px){.pg{grid-template-columns:1fr}.wide{grid-column:auto}.pf{padding:16px}}
 </style>
-<div class="tx-note">این فورم هنوز به دیتابیس وصل نیست؛ معلومات واردشده ذخیره نمی‌شود.</div>
-<form class="tx-form" id="purchaseForm">
-<h2 class="tx-title">معلومات معامله خرید</h2>
-<div class="tx-grid">
-<div class="tx-field"><label for="purchase-property">ملک</label><input id="purchase-property" name="property_name" placeholder="شناسه یا آدرس ملک" required></div>
-<div class="tx-field"><label for="purchase-date">تاریخ خرید</label><input id="purchase-date" name="transaction_date" type="date" required></div>
-<div class="tx-field"><label for="purchase-seller">نام فروشنده</label><input id="purchase-seller" name="seller_name" placeholder="نام کامل فروشنده" required></div>
-<div class="tx-field"><label for="purchase-buyer">نام خریدار / مشتری دفتر</label><input id="purchase-buyer" name="buyer_name" placeholder="نام کامل خریدار" required></div>
-<div class="tx-field"><label for="purchase-price">قیمت توافق‌شده</label><input id="purchase-price" name="amount" type="number" min="0" step="0.01" placeholder="مبلغ خرید" required></div>
-<div class="tx-field"><label for="purchase-currency">واحد پول</label><select id="purchase-currency" name="currency"><option value="AFN">افغانی (AFN)</option><option value="USD">دالر امریکایی (USD)</option><option value="PKR">روپیه پاکستانی (PKR)</option></select></div>
-<div class="tx-field"><label for="purchase-status">وضعیت معامله</label><select id="purchase-status" name="status"><option value="pending">در حال تکمیل</option><option value="completed">تکمیل‌شده</option><option value="cancelled">لغوشده</option></select></div>
-<div class="tx-field"><label for="purchase-reference">شماره سند / مرجع (اختیاری)</label><input id="purchase-reference" name="reference" placeholder="شماره سند یا مرجع"></div>
-<div class="tx-field full"><label for="purchase-notes">یادداشت‌ها</label><textarea id="purchase-notes" name="notes" placeholder="شرایط توافق و توضیحات ضروری"></textarea></div>
+<div class="note">این فورم برای ثبت درخواست مشتری جهت خرید ملک است. فهرست انواع ملک بعداً اضافه می‌شود. فعلاً معلومات به دیتابیس ذخیره نمی‌شود.</div>
+<form class="pf" id="purchaseRequestForm">
+<h2 style="margin:0 0 18px;font-size:16px">ثبت درخواست خرید</h2>
+<div class="pg">
+<div class="field wide"><label for="buyer-name">نام مکمل مشتری</label><input id="buyer-name" name="full_name" autocomplete="name" placeholder="نام و تخلص" required></div>
+<div class="field"><label for="buyer-budget">بودجه خرید</label><input id="buyer-budget" name="budget" type="number" min="0" step="0.01" placeholder="مبلغ بودجه" required></div>
+<div class="field"><label for="buyer-currency">واحد پول</label><select id="buyer-currency" name="currency" required><option value="AFN">افغانی (AFN)</option><option value="USD">دالر امریکایی (USD)</option><option value="PKR">روپیه پاکستانی (PKR)</option></select></div>
+<div class="field wide"><label for="buyer-property-type">نوع ملک مورد نظر</label><select id="buyer-property-type" name="property_type" required><option value="">نوع ملک را بعداً اضافه می‌کنیم</option></select><small style="font-size:11px;color:#7b8797">گزینه‌های نوع ملک بعداً مطابق فهرستی که شما می‌دهید اضافه می‌شود.</small></div>
+<div class="field wide"><label>موقعیت‌های مورد نظر برای خرید</label><div class="locs" id="buyerLocations"><div class="locrow"><input name="locations[]" placeholder="مثلاً: ناحیه، شهرک یا منطقه" required><button type="button" class="btn remove" disabled>حذف</button></div></div><button class="btn add" id="addBuyerLocation" type="button" style="justify-self:start">+ افزودن موقعیت دیگر</button><small style="font-size:11px;color:#7b8797">برای وارد کردن چند موقعیت، هر بار یک خانه متنی اضافه کنید.</small></div>
+<div class="field wide"><label for="buyer-notes">توضیحات اضافی (اختیاری)</label><textarea id="buyer-notes" name="notes" placeholder="سایر خواسته‌های مشتری"></textarea></div>
 </div>
-<div class="tx-actions"><button class="tx-btn tx-primary" type="submit">ثبت خرید</button><button class="tx-btn tx-secondary" type="reset">پاک‌کردن فورم</button></div>
-<p id="purchaseMessage" role="status" style="margin:14px 0 0;color:#77551a;font-size:12px;line-height:1.8"></p>
+<div style="display:flex;gap:10px;margin-top:22px"><button class="btn primary" type="submit">ثبت درخواست خرید</button><button class="btn secondary" type="reset">پاک‌کردن فورم</button></div>
+<p id="buyerMessage" role="status" style="font-size:12px;line-height:1.8"></p>
 </form>
 <script>
-document.getElementById('purchaseForm')?.addEventListener('submit',function(event){event.preventDefault();document.getElementById('purchaseMessage').textContent='برای ذخیره واقعی باید اتصال دیتابیس و جدول معاملات اضافه شود. فعلاً هیچ معلوماتی ذخیره نشده است.';});
+(function(){
+const form=document.getElementById('purchaseRequestForm'),list=document.getElementById('buyerLocations'),add=document.getElementById('addBuyerLocation'),msg=document.getElementById('buyerMessage');
+function update(){const rows=list.querySelectorAll('.locrow');rows.forEach(row=>row.querySelector('button').disabled=rows.length===1);}
+function makeRow(){const row=document.createElement('div');row.className='locrow';const input=document.createElement('input');input.name='locations[]';input.placeholder='موقعیت دیگر برای خرید';input.required=true;const btn=document.createElement('button');btn.type='button';btn.className='btn remove';btn.textContent='حذف';btn.addEventListener('click',()=>{row.remove();update();});row.append(input,btn);return row;}
+add.addEventListener('click',()=>{list.appendChild(makeRow());update();});
+form.addEventListener('reset',()=>setTimeout(()=>{list.innerHTML='';list.appendChild(makeRow());msg.textContent='';update();},0));
+form.addEventListener('submit',e=>{e.preventDefault();msg.textContent='فورم تکمیل شد؛ اتصال دیتابیس هنوز اضافه نشده و معلومات ذخیره نمی‌شود.';});
+update();
+})();
 </script>
