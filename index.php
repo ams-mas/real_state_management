@@ -139,6 +139,13 @@ if (!isset($_SESSION['login_csrf'])) {
         <h1>سیستم مدیریت رهنمای معاملات</h1>
         <p class="subtitle">برای ورود، مشخصات حساب خود را وارد کنید.</p>
 
+        <?php if (!empty($_SESSION['login_error'])): ?>
+            <div role="alert" style="margin:-12px 0 18px;padding:11px 12px;border:1px solid #fecaca;border-radius:7px;background:#fef2f2;color:#991b1b;font-size:13px;line-height:1.8;">
+                <?= htmlspecialchars((string)$_SESSION['login_error'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>
+            </div>
+            <?php unset($_SESSION['login_error']); ?>
+        <?php endif; ?>
+
         <form action="login.php" method="post" autocomplete="on">
             <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['login_csrf'], ENT_QUOTES, 'UTF-8') ?>">
 
