@@ -27,6 +27,16 @@ $pages = [
         'description' => 'مدیریت مالکان، خریداران، فروشندگان، کرایه‌نشینان و مشتریان',
         'file' => __DIR__ . '/pages/people.php',
     ],
+    'sales' => [
+        'title' => 'ثبت فروش',
+        'description' => 'ثبت اطلاعات ملک فروخته‌شده و طرفین معامله',
+        'file' => __DIR__ . '/pages/sales.php',
+    ],
+    'purchases' => [
+        'title' => 'ثبت خرید',
+        'description' => 'ثبت اطلاعات ملک خریداری‌شده و طرفین معامله',
+        'file' => __DIR__ . '/pages/purchases.php',
+    ],
     'requests' => [
         'title' => 'درخواست‌های مشتریان',
         'description' => 'ثبت درخواست خرید یا کرایه، حتی زمانی که ملک مناسب موجود نیست',
@@ -73,7 +83,7 @@ function e(string $value): string
 
 $navGroups = [
     'عمومی' => ['dashboard'],
-    'مدیریت معاملات' => ['properties', 'people', 'requests', 'visits', 'offers', 'agreements'],
+    'مدیریت معاملات' => ['properties', 'people', 'sales', 'purchases', 'requests', 'visits', 'offers', 'agreements'],
     'تنظیمات سیستم' => ['exchange-rates', 'users'],
 ];
 
@@ -81,6 +91,8 @@ $icons = [
     'dashboard' => '▦',
     'properties' => '⌂',
     'people' => '♙',
+    'sales' => '↗',
+    'purchases' => '↙',
     'requests' => '☷',
     'visits' => '◷',
     'offers' => '⇄',
