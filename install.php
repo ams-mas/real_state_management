@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($host === '' || $port < 1 || $port > 65535) throw new RuntimeException('سرور یا درگاه پایگاه داده معتبر نیست.');
         if (!preg_match('/^[A-Za-z0-9_]{1,64}$/', $db)) throw new RuntimeException('نام پایگاه داده فقط می‌تواند شامل حروف انگلیسی، عدد و زیرخط باشد.');
         if (!preg_match('/^[A-Za-z0-9_.@-]{3,64}$/', $admin)) throw new RuntimeException('نام کاربری مدیر باید حداقل ۳ نویسه و فقط شامل حروف انگلیسی، عدد یا . _ @ - باشد.');
-        if (strlen($adminPass) < 12) throw new RuntimeException('رمز عبور مدیر باید حداقل ۱۲ نویسه داشته باشد.');
+        if (strlen($adminPass) < 8) throw new RuntimeException('رمز عبور مدیر باید حداقل ۸ نویسه داشته باشد.');
         if ($adminPass !== $confirm) throw new RuntimeException('رمز عبور و تکرار آن یکسان نیست.');
 
         $dsn = "mysql:host={$host};port={$port};charset=utf8mb4";
@@ -232,8 +232,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <h2>ساخت حساب مدیر سیستم</h2>
 <div class="grid">
 <div class="field"><label for="admin_user">نام کاربری مدیر</label><input id="admin_user" name="admin_user" value="<?= h((string)($_POST['admin_user'] ?? '')) ?>" minlength="3" maxlength="64" required></div>
-<div class="field"><label for="admin_pass">رمز عبور مدیر (حداقل ۱۲ نویسه)</label><input id="admin_pass" name="admin_pass" type="password" minlength="12" autocomplete="new-password" required></div>
-<div class="field"><label for="admin_confirm">تکرار رمز عبور مدیر</label><input id="admin_confirm" name="admin_confirm" type="password" minlength="12" autocomplete="new-password" required></div>
+<div class="field"><label for="admin_pass">رمز عبور مدیر (حداقل ۸ نویسه)</label><input id="admin_pass" name="admin_pass" type="password" minlength="8" autocomplete="new-password" required></div>
+<div class="field"><label for="admin_confirm">تکرار رمز عبور مدیر</label><input id="admin_confirm" name="admin_confirm" type="password" minlength="8" autocomplete="new-password" required></div>
 </div>
 <button class="btn" type="submit">ایجاد پایگاه داده و نصب سیستم</button>
 </form>
