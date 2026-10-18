@@ -1,1 +1,0 @@
-# real_state_management
