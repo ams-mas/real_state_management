@@ -56,7 +56,7 @@ nav{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}nav a{background:white;
 <div class="card"><span>توافق‌نامه‌های فعال یا پیش‌نویس</span><div class="number"><?= $counts['agreements'] ?></div></div>
 </div>
 <nav>
-<a href="properties.php">ملک‌ها</a><a href="people.php">اشخاص و مشتریان</a><a href="requests.php">درخواست مشتریان</a><a href="visits.php">بازدیدها</a><a href="offers.php">پیشنهادها</a><a href="agreements.php">توافق‌نامه‌ها</a><a href="exchange_rates.php">نرخ ارز</a>
+<a href="properties.php">ملک‌ها</a><a href="people.php">اشخاص و مشتریان</a><a href="requests.php">درخواست مشتریان</a><a href="visits.php">بازدیدها</a><a href="offers.php">پیشنهادها</a><a href="agreements.php">توافق‌نامه‌ها</a><a href="exchange_rates.php">نرخ ارز</a><a href="create_user.php">ساخت حساب کاربری</a>
 </nav>
 <section class="section"><h2>آخرین فعالیت‌ها</h2>
 <?php if (!$recent): ?><p class="muted">هنوز فعالیتی ثبت نشده است یا اتصال پایگاه داده در دسترس نیست.</p>
