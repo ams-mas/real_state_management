@@ -23,7 +23,7 @@ if ($username === '' || $password === '' || strlen($username) > 64) {
     exit;
 }
 try {
-    require __DIR__ . '/config/database.php';
+    $pdo = require __DIR__ . '/config/database.php';
     $stmt = $pdo->prepare('SELECT id, username, password_hash, full_name, role, is_active FROM users WHERE username = :username LIMIT 1');
     $stmt->execute(['username' => $username]);
     $user = $stmt->fetch();
