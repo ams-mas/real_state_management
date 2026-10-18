@@ -1,0 +1,13 @@
+<?php // Reporting dashboard placeholders until real data queries are implemented. ?>
+<style>
+.rep-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.rep-card{background:#fff;border:1px solid #e3e8ef;border-radius:13px;padding:20px}.rep-card h2{font-size:14px;margin:0 0 10px}.rep-card p{font-size:12px;color:#6c7a8c;line-height:1.9;margin:0}.rep-number{font-size:23px;font-weight:800;margin:12px 0}.rep-note{margin-top:16px;padding:12px 15px;border:1px solid #f1dfb2;border-radius:9px;background:#fff8e7;color:#77551a;font-size:12px;line-height:1.9}.rep-toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}.rep-toolbar input,.rep-toolbar select{min-height:40px;border:1px solid #d9e1eb;border-radius:8px;padding:9px;font:inherit;font-size:12px}@media(max-width:850px){.rep-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:560px){.rep-grid{grid-template-columns:1fr}}
+</style>
+<div class="rep-toolbar"><label>از تاریخ <input type="date" id="reportFrom"></label><label>تا تاریخ <input type="date" id="reportTo"></label><select id="reportType"><option>همه گزارش‌ها</option><option>املاک بر اساس نوع</option><option>املاک بر اساس منطقه</option><option>قیمت‌های ثبت‌شده</option><option>معاملات تکمیل‌شده</option><option>درخواست‌های مشتریان</option><option>عملکرد کارمندان</option></select><button class="mod-btn mod-primary" type="button" onclick="window.print()">چاپ گزارش</button></div>
+<div class="rep-grid">
+<div class="rep-card"><h2>املاک بر اساس نوع</h2><div class="rep-number">—</div><p>زمین، خانه، آپارتمان، دوکان و سایر انواع</p></div>
+<div class="rep-card"><h2>املاک بر اساس منطقه</h2><div class="rep-number">—</div><p>ولایت، شهر، ناحیه و منطقه</p></div>
+<div class="rep-card"><h2>قیمت‌های ثبت‌شده</h2><div class="rep-number">—</div><p>قیمت فروش، کرایه و گرویی؛ صرفاً اطلاعات ثبت‌شده</p></div>
+<div class="rep-card"><h2>معاملات تکمیل‌شده</h2><div class="rep-number">—</div><p>نتیجه معاملات ثبت‌شده در بازه زمانی</p></div>
+<div class="rep-card"><h2>درخواست‌های مشتریان</h2><div class="rep-number">—</div><p>جدید، در حال پیگیری و تکمیل‌شده</p></div>
+<div class="rep-card"><h2>عملکرد کارمندان</h2><div class="rep-number">—</div><p>بازدیدها، درخواست‌ها و معاملات ثبت‌شده</p></div>
+</div><div class="rep-note">گزارش‌های واقعی پس از اتصال دیتابیس و تعیین سطح دسترسی کاربران ساخته می‌شوند. هیچ گزارش دریافت یا انتقال پول در این سیستم وجود نخواهد داشت.</div>
