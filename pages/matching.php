@@ -1,0 +1,14 @@
+<?php // Search and match suitable properties to customer requests. ?>
+<style>
+.mat-card{background:#fff;border:1px solid #e3e8ef;border-radius:14px;padding:22px}.mat-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px}.mat-field{display:flex;flex-direction:column;gap:7px}.mat-field label{font-size:12px;font-weight:700;color:#34465c}.mat-field input,.mat-field select{width:100%;min-height:41px;padding:9px;border:1px solid #d9e1eb;border-radius:8px;font:inherit;font-size:12px}.mat-btn{margin-top:18px;border:0;border-radius:8px;padding:11px 16px;background:#2463a6;color:#fff;font:inherit;font-size:12px;cursor:pointer}.mat-empty{margin-top:18px;padding:28px;text-align:center;background:#f8fafc;border:1px dashed #cbd5e1;border-radius:10px;color:#6c7a8c;font-size:12px;line-height:1.9}@media(max-width:900px){.mat-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:550px){.mat-grid{grid-template-columns:1fr}.mat-card{padding:15px}}
+</style>
+<section class="mat-card"><h2 style="font-size:16px;margin:0 0 18px">جستجو و تطبیق املاک با درخواست مشتری</h2><form id="matchingForm"><div class="mat-grid">
+<div class="mat-field"><label>نوع درخواست</label><select name="deal"><option>خرید</option><option>کرایه</option><option>گرویی</option></select></div>
+<div class="mat-field"><label>نوع ملک</label><select name="type"><option value="">همه نوع‌ها</option><option>زمین</option><option>خانه</option><option>آپارتمان</option><option>دوکان</option><option>مارکیت</option><option>دفتر</option><option>گدام</option></select></div>
+<div class="mat-field"><label>ولایت / منطقه</label><input name="location" placeholder="نام منطقه"></div>
+<div class="mat-field"><label>واحد پول</label><select name="currency"><option>AFN</option><option>USD</option><option>PKR</option></select></div>
+<div class="mat-field"><label>حداقل قیمت</label><input type="number" min="0" name="min_price"></div><div class="mat-field"><label>حداکثر قیمت</label><input type="number" min="0" name="max_price"></div>
+<div class="mat-field"><label>حداقل مساحت</label><input type="number" min="0" name="min_area"></div><div class="mat-field"><label>تعداد اتاق</label><input type="number" min="0" name="rooms"></div>
+</div><button class="mat-btn" type="submit">جستجو و تطبیق</button></form>
+<div class="mat-empty" id="matchingMessage">نتایج مطابق معیارهای جستجو پس از اتصال دیتابیس و ثبت املاک و درخواست‌ها نمایش داده می‌شود.</div></section>
+<script>document.getElementById('matchingForm').addEventListener('submit',e=>{e.preventDefault();document.getElementById('matchingMessage').textContent='معیارهای جستجو دریافت شد، اما تطبیق واقعی پس از اتصال دیتابیس فعال می‌شود.';});</script>
