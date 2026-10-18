@@ -143,8 +143,16 @@ Use this stack unless a documented technical reason requires a change:
 Prefer modular PHP code with shared configuration, database-access, authentication, authorization, validation, and layout components. Use Composer packages only when beneficial and maintainable. Keep local XAMPP development practical without preventing secure production hosting.
 
 ## 6. Language, Usability, and Interface
-- Use clear terminology that real-estate agency staff can understand.
-- Support Dari/Persian labels and right-to-left (RTL) layouts where required.
+- **The entire user-facing system must be in Persian (Dari/Farsi), with a right-to-left (RTL) interface by default.** This is a firm requirement, not an optional feature.
+- All menus, page titles, buttons, form labels, placeholders, validation messages, error messages, confirmations, notifications, status labels, dashboards, tables, reports, and printable documents must be in Persian.
+- Use terminology familiar to real-estate offices in Afghanistan. Prefer clear Dari/Persian wording over English labels or literal translations that sound unnatural.
+- User-facing dates, numbers, prices, and currency labels should be formatted consistently for the intended Persian-speaking users. Support AFN and foreign currencies as specified elsewhere in this file.
+- Keep source code identifiers, database column names, API names, and developer comments in English where that improves maintainability; this does not permit English text in the user interface.
+- Do not mix English and Persian in the interface except for necessary proper nouns, currency codes, or technical identifiers that cannot reasonably be localized.
+- Support clear Persian fonts, correct text direction, readable forms, tables, and responsive RTL layouts on desktop, tablet, and mobile.
+- Keep forms consistent, navigation predictable, and tables easy to scan.
+- Provide meaningful validation messages and confirmations for destructive actions in Persian.
+- Preserve existing working behavior and design conventions unless a change is requested.
 - Keep forms consistent, navigation predictable, and tables easy to scan.
 - Provide meaningful validation messages and confirmations for destructive actions.
 - Use responsive layouts for desktop, tablet, and mobile.
