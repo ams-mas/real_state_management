@@ -43,7 +43,7 @@ try {
     $update = $pdo->prepare('UPDATE users SET last_login_at = NOW() WHERE id = :id');
     $update->execute(['id' => (int)$user['id']]);
     $log = $pdo->prepare('INSERT INTO activity_logs (user_id, action, details) VALUES (:id, :action, :details)');
-    $log->execute(['id' => (int)$user['id'], 'action' => 'login', 'details' => 'Successful login']);
+    $log->execute(['id' => (int)$user['id'], 'action' => 'login', 'details' => json_encode(['message' => 'Successful login'], JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR)]);
     header('Location: dashboard.php');
     exit;
 } catch (Throwable $e) {
