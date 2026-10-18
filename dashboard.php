@@ -14,7 +14,7 @@ function h(string $value): string {
 $counts = ['properties' => 0, 'people' => 0, 'requests' => 0, 'agreements' => 0];
 $recent = [];
 try {
-    require __DIR__ . '/config/database.php';
+    $pdo = require __DIR__ . '/config/database.php';
     $queries = [
         'properties' => 'SELECT COUNT(*) FROM properties',
         'people' => 'SELECT COUNT(*) FROM people',
