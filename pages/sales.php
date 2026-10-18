@@ -137,8 +137,8 @@
     <p id="saleFormMessage" role="status" aria-live="polite"></p>
 </form>
 
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5.6.2/dist/maplibre-gl.css">
+<script src="https://unpkg.com/maplibre-gl@5.6.2/dist/maplibre-gl.js"></script>
 <script>
 (function () {
     const form = document.getElementById('saleForm');
@@ -148,20 +148,19 @@
     const searchButton = document.getElementById('sale-map-search-button');
     const resultsBox = document.getElementById('saleSearchResults');
     const message = document.getElementById('saleFormMessage');
-    const defaultCenter = [34.5553, 69.2075]; // Kabul, Afghanistan
+    const defaultCenter = [69.2075, 34.5553]; // MapLibre uses [longitude, latitude].
     let map = null;
     let marker = null;
     let searchResults = [];
 
-    function setLocation(lat, lng, placeId, displayName) {
+    function setLocation(lng, lat, placeId, displayName) {
         document.getElementById('sale-latitude').value = Number(lat).toFixed(7);
         document.getElementById('sale-longitude').value = Number(lng).toFixed(7);
         document.getElementById('sale-place-id').value = placeId || '';
         if (displayName) addressInput.value = displayName;
         if (map) {
-            map.setView([Number(lat), Number(lng)], 16);
-            if (marker) marker.setLatLng([Number(lat), Number(lng)]);
-            else marker = L.marker([Number(lat), Number(lng)], {draggable: true}).addTo(map);
+            map.flyTo({center: [Number(lng), Number(lat)], zoom: 16});
+            if (marker) marker.setLngLat([Number(lng), Number(lat)]);
         }
         message.textContent = 'موقعیت ملک در فورم انتخاب شد؛ پس از اتصال دیتابیس ذخیره دائمی می‌شود.';
         message.style.color = '#2463a6';
@@ -186,7 +185,7 @@
         const lat = Number(item.lat);
         const lng = Number(item.lon);
         if (!Number.isFinite(lat) || !Number.isFinite(lng)) return;
-        setLocation(lat, lng, item.place_id ? String(item.place_id) : '', item.display_name || item.name || '');
+        setLocation(lng, lat, item.osm_id ? String(item.osm_type || '') + ':' + String(item.osm_id) : '', item.display_name || item.name || '');
         resultsBox.style.display = 'none';
         resultsBox.innerHTML = '';
         searchInput.value = item.display_name || item.name || '';
@@ -235,26 +234,32 @@
             });
     }
 
-    if (window.L && document.getElementById('saleMap')) {
-        map = L.map('saleMap').setView(defaultCenter, 12);
-        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19,
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap contributors</a>'
-        }).addTo(map);
-        marker = L.marker(defaultCenter, {draggable: true}).addTo(map);
-        map.on('click', function (event) {
-            marker.setLatLng(event.latlng);
-            setLocation(event.latlng.lat, event.latlng.lng, '');
-            reverseGeocode(event.latlng.lat, event.latlng.lng);
+    const mapElement = document.getElementById('saleMap');
+    if (window.maplibregl && mapElement) {
+        map = new maplibregl.Map({
+            container: 'saleMap',
+            style: 'https://tiles.openfreemap.org/styles/liberty',
+            center: defaultCenter,
+            zoom: 12,
+            attributionControl: true
         });
-        marker.on('dragend', function (event) {
-            const point = event.target.getLatLng();
-            setLocation(point.lat, point.lng, '');
+        map.addControl(new maplibregl.NavigationControl(), 'top-left');
+        marker = new maplibregl.Marker({draggable: true, color: '#2463a6'})
+            .setLngLat(defaultCenter)
+            .addTo(map);
+        map.on('click', function (event) {
+            const point = event.lngLat;
+            marker.setLngLat([point.lng, point.lat]);
+            setLocation(point.lng, point.lat, '');
             reverseGeocode(point.lat, point.lng);
         });
-    } else {
-        const mapElement = document.getElementById('saleMap');
-        if (mapElement) mapElement.textContent = 'بارگذاری نقشه ناکام شد. اتصال اینترنت و دسترسی به سرویس نقشه را بررسی کنید.';
+        marker.on('dragend', function () {
+            const point = marker.getLngLat();
+            setLocation(point.lng, point.lat, '');
+            reverseGeocode(point.lat, point.lng);
+        });
+    } else if (mapElement) {
+        mapElement.textContent = 'بارگذاری نقشه ناکام شد. اتصال اینترنت و دسترسی به سرویس نقشه را بررسی کنید.';
     }
 
     searchButton.addEventListener('click', searchAddress);
@@ -277,8 +282,8 @@
                 document.getElementById(id).value = '';
             });
             if (marker && map) {
-                marker.setLatLng(defaultCenter);
-                map.setView(defaultCenter, 12);
+                marker.setLngLat(defaultCenter);
+                map.flyTo({center: defaultCenter, zoom: 12});
             }
             resultsBox.style.display = 'none';
             resultsBox.innerHTML = '';
