@@ -1,6 +1,0 @@
-# Local configuration and secrets
-/config/database.local.php
-/config/database.local.php.tmp
-/.env
-/.env.*
-!/.env.example
