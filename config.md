@@ -15,6 +15,7 @@ This file is the high-level project guide. Follow its goals, technical choices, 
 - Record customer requests to buy or rent a property, including minimum and maximum budgets.
 - Match customer requests with available properties.
 - Track inquiries, viewings, offers, negotiations, and agreement status.
+- Save each property's map coordinates and show its location on the registered property detail page using Google Maps when configured.
 - Make records easy to search, filter, review, and update.
 - Provide dashboards and reports for authorized staff.
 - Keep an audit trail for important actions.
@@ -123,6 +124,7 @@ Develop these modules based on requirements and the existing code:
 3. **Customers** — contact profiles, roles, history, and linked records.
 4. **Customer Requests** — buy/rent requirements, minimum and maximum budget, currency, rental period, staff assignment, status, and follow-ups.
 5. **Matching and Viewings** — potential matches, property presentations, appointments, feedback, offers, and negotiations.
+6. **Property Map Location** — choose a property location on Google Maps, save latitude/longitude, and display the map on property details when configured.
 6. **Agreements and Transactions** — sale/rental records, parties, agreed terms, status, and document references.
 7. **Users and Roles** — staff accounts, permissions, and assignments.
 8. **Reports and Search** — available properties, active requests, matching results, completed deals, and printable reports.
@@ -175,6 +177,7 @@ Security must be considered in every feature, not added at the end.
 - Keep secrets and production credentials outside public web folders and out of Git. Use example configuration without real secrets when needed.
 - Disable detailed error display in production. Log errors without exposing passwords, session tokens, SQL details, or private customer data.
 - Restrict and validate uploads (including property photos and documents): allow only required file types, check actual content and size, generate safe filenames, and prevent uploaded files from being executed.
+- For Google Maps integration, keep API keys out of source control, restrict browser keys to approved origins and required APIs, and keep any server-side secrets outside the public web root. Configure the map service only after the owner sets up the required Google Maps Platform account and billing.
 - Use HTTPS in production and keep PHP, database software, libraries, and server configuration updated.
 - Protect sensitive customer and property information; collect only what the agency needs and restrict access appropriately.
 - Record important security events and sensitive changes in an audit log without logging secrets.
