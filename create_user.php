@@ -5,14 +5,6 @@ header('X-Content-Type-Options: nosniff');
 header('X-Frame-Options: DENY');
 header('Cache-Control: no-store');
 
-if (empty($_SESSION['user_id'])) {
-    header('Location: index.php');
-    exit;
-}
-if (($_SESSION['role'] ?? '') !== 'admin') {
-    http_response_code(403);
-    exit('شما اجازه ساخت حساب کاربری را ندارید.');
-}
 if (empty($_SESSION['create_user_csrf'])) {
     $_SESSION['create_user_csrf'] = bin2hex(random_bytes(32));
 }
@@ -28,6 +20,10 @@ $role = 'staff';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
+        // Anyone may view this form, but only an authenticated administrator may create accounts.
+        if (empty($_SESSION['user_id']) || (($_SESSION['role'] ?? '') !== 'admin')) {
+            throw new RuntimeException('برای ساخت حساب کاربری، ابتدا با حساب مدیر سیستم وارد شوید.');
+        }
         if (!hash_equals((string)$_SESSION['create_user_csrf'], (string)($_POST['csrf_token'] ?? ''))) {
             throw new RuntimeException('درخواست معتبر نیست. صفحه را دوباره باز کنید.');
         }
@@ -144,7 +140,7 @@ button{width:100%;margin-top:20px;padding:12px;border:0;border-radius:7px;backgr
 <header><h1>سیستم مدیریت رهنمای معاملات</h1><a href="dashboard.php">بازگشت به داشبورد</a></header>
 <main><section class="panel">
 <h2>ساخت حساب کاربری جدید</h2>
-<p class="muted">این صفحه فقط برای مدیر سیستم است. رمز عبور به شکل هش امن ذخیره می‌شود.</p>
+<p class="muted">مشاهده این صفحه بدون ورود امکان‌پذیر است؛ اما برای ساخت حساب باید با حساب مدیر سیستم وارد شوید. رمز عبور به شکل هش امن ذخیره می‌شود.</p>
 <?php if ($error !== ''): ?><div class="alert error"><?= h($error) ?></div><?php endif; ?>
 <?php if ($success !== ''): ?><div class="alert success"><?= h($success) ?></div><?php endif; ?>
 <form method="post" autocomplete="off">
