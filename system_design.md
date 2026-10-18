@@ -205,6 +205,32 @@ Audit records should include actor, action, record type/ID, timestamp, and safe 
 
 Settings should manage property categories, supported currencies, locations, status labels, agency information, and formatting options without hard-coding changeable lists throughout the code.
 
+### 5.13 Property Map Location (Google Maps)
+
+The property registration form and saved property detail page should support a map location for each property.
+
+Required behavior:
+- Allow authorized staff to search for a place/address on Google Maps or place/move a marker on the map to identify the property's location.
+- Save the selected latitude and longitude with the property record. Save the written address/location fields separately; coordinates supplement, not replace, the property's Afghan province, district, city, neighborhood, and landmark.
+- On the registered property detail page, show an embedded map centered on the saved marker, with a marker for that property.
+- Provide an action to open the location in Google Maps for navigation or a larger map view.
+- Allow authorized staff to update the marker if the location was entered incorrectly; record important edits in the audit log.
+- If the map service or internet is unavailable, keep the rest of the property form/detail usable and show the saved address and coordinates. Do not lose saved property data.
+- Coordinates are optional until a staff member selects a map location. Clearly show when the location has not been pinned.
+- Do not expose private properties or exact coordinates on a public website unless a public listing feature is explicitly approved. This system is office-facing by default.
+- Use Google Maps Platform only after the project owner configures an appropriate API key and billing/account settings. Restrict browser keys to approved website origins and only the required APIs; keep server-side keys outside the public web root and out of Git.
+- Never hard-code API keys or commit secrets. Document local and production configuration with placeholders.
+- Confirm current Google Maps Platform terms, pricing, and required APIs before production deployment; do not assume the service is free.
+- Keep a fallback location entry (address/landmark and optional coordinates) so the office can still register a property if map search is unavailable.
+
+Suggested property fields:
+- `latitude` DECIMAL with adequate precision, nullable.
+- `longitude` DECIMAL with adequate precision, nullable.
+- Optionally `map_place_id` if place search is implemented and there is a clear use for it.
+- Keep the structured location foreign keys and human-readable address/landmark fields.
+
+Validate latitude is between -90 and 90 and longitude between -180 and 180. Use parameterized queries and enforce the same server-side authorization rules as the rest of the property record.
+
 ### 5.12 Backup and Maintenance
 Document secure database and uploaded-file backup procedures, access restrictions, retention, and restoration tests. Never expose backups publicly or commit real customer data.
 
