@@ -144,6 +144,10 @@ $icons = [
         .language-label { font-size: 11px; color: #d8e4f1; }
         .language-select { min-height: 34px; padding: 5px 9px; border: 1px solid #48617d; border-radius: 8px; background: #fff; color: #172b42; font: inherit; font-size: 12px; max-width: 130px; }
         .language-select:focus { outline: 2px solid #bfdbfe; }
+        body[dir="ltr"] .side-panel { right: auto; left: 0; border-left: 0; border-right: 1px solid var(--border); }
+        body[dir="ltr"] .main-content { margin-right: 0; margin-left: var(--sidebar-width); }
+        body[dir="ltr"] .nav-link { text-align: left; }
+        @media (max-width: 680px) { body[dir="ltr"] .side-panel { left: 0; right: auto; transform: translateX(-105%); } body[dir="ltr"] .side-panel.open { transform: translateX(0); } body[dir="ltr"] .main-content { margin-left: 0; } }
         .top-status { font-size: 12px; color: #d8e4f1; }
         .user-chip { display: flex; align-items: center; gap: 9px; padding: 7px 11px; border: 1px solid #3c5470; border-radius: 10px; font-size: 12px; }
         .user-avatar { width: 28px; height: 28px; display: grid; place-items: center; border-radius: 50%; background: #dbeafe; color: var(--navy); font-weight: 700; }
@@ -328,6 +332,10 @@ $icons = [
             'موقعیت پیدا نشد؛ آدرس را دقیق‌تر وارد کنید یا مستقیماً روی نقشه کلیک کنید.':'Location not found. Try a more precise address or click the map directly.',
             'جستجوی آدرس فعلاً در دسترس نیست. می‌توانید مستقیماً روی نقشه کلیک کنید یا آدرس را دستی بنویسید.':'Address search is unavailable. Click the map or enter the address manually.',
             'فورم بررسی شد، اما هنوز به دیتابیس وصل نیست؛ معلومات و موقعیت ملک ذخیره دائمی نشده است.':'Form checked, but it is not connected to the database. The property details and location have not been saved.',
+            'این فورم برای ثبت درخواست مشتری جهت خرید ملک است. فهرست انواع ملک بعداً اضافه می‌شود. فعلاً معلومات به دیتابیس ذخیره نمی‌شود.':'This form records a customer request to buy property. Property types will be added later. Data is not saved to the database yet.',
+            'ثبت درخواست خرید':'Register Purchase Request','نام مکمل مشتری':'Customer Full Name','نام و تخلص':'First and last name','بودجه خرید':'Purchase Budget','مبلغ بودجه':'Budget amount','واحد پول':'Currency','نوع ملک مورد نظر':'Desired Property Type','نوع ملک را بعداً اضافه می‌کنیم':'Property types will be added later','گزینه‌های نوع ملک بعداً مطابق فهرستی که شما می‌دهید اضافه می‌شود.':'Property types will be added later based on your list.',
+            'موقعیت‌های مورد نظر برای خرید':'Preferred Purchase Locations','مثلاً: ناحیه، شهرک یا منطقه':'For example: district, township, or area','+ افزودن موقعیت دیگر':'+ Add Another Location','برای وارد کردن چند موقعیت، هر بار یک خانه متنی اضافه کنید.':'Add a text field for each additional location.',
+            'توضیحات اضافی (اختیاری)':'Additional Notes (optional)','سایر خواسته‌های مشتری':'Other customer requirements','فورم تکمیل شد؛ اتصال دیتابیس هنوز اضافه نشده و معلومات ذخیره نمی‌شود.':'Form completed. Database connection is not implemented yet, so data is not saved.',
             'نام مکمل مشتری':'Customer Full Name','بودجه خرید':'Purchase Budget','واحد پول':'Currency','افغانی (AFN)':'Afghani (AFN)',
             'دالر امریکایی (USD)':'US Dollar (USD)','روپیه پاکستانی (PKR)':'Pakistani Rupee (PKR)','موقعیت‌های مورد نظر':'Preferred Locations',
             'موقعیت دیگر برای خرید':'Another preferred purchase location','افزودن موقعیت':'Add Location','حذف':'Remove','توضیحات اضافی (اختیاری)':'Additional Notes (optional)',
@@ -367,6 +375,12 @@ $icons = [
             'عرض جغرافیایی (Latitude)':'عرض البلد (Latitude)','طول جغرافیایی (Longitude)':'طول البلد (Longitude)',
             'یادداشت‌ها (اختیاری)':'یادښتونه (اختیاري)','توضیحات اضافی درباره ملک یا فروش':'د ملکیت یا پلور په اړه نور معلومات',
             'ثبت فروش':'د پلور ثبت','پاک‌کردن فورم':'فورمه پاکول','موقعیت‌های مورد نظر':'غوښتل شوي ځایونه',
+            'دا فورمه د ملکیت د پېرودلو لپاره د پېرودونکي غوښتنه ثبتوي. د ملکیت ډولونه به وروسته زیات شي. معلومات لا ډیټابېس ته نه خوندي کېږي.':'دا فورمه د ملکیت د پېرودلو لپاره د پېرودونکي غوښتنه ثبتوي. د ملکیت ډولونه به وروسته زیات شي. معلومات لا ډیټابېس ته نه خوندي کېږي.',
+            'ثبت درخواست خرید':'د پېرود غوښتنه ثبتول','نام مکمل مشتری':'د پېرودونکي بشپړ نوم','نام و تخلص':'نوم او تخلص','بودجه خرید':'د پېرود بودیجه','مبلغ بودجه':'د بودیجې اندازه','واحد پول':'د پیسو واحد',
+            'نوع ملک مورد نظر':'د غوښتل شوي ملکیت ډول','نوع ملک را بعداً اضافه می‌کنیم':'د ملکیت ډولونه به وروسته زیات شي','گزینه‌های نوع ملک بعداً مطابق فهرستی که شما می‌دهید اضافه می‌شود.':'د ملکیت ډولونه به وروسته ستاسو د ورکړل شوي لېست له مخې زیات شي.',
+            'موقعیت‌های مورد نظر برای خرید':'د پېرود لپاره غوښتل شوي ځایونه','مثلاً: ناحیه، شهرک یا منطقه':'لکه: ناحیه، ښارګوټی یا سیمه','+ افزودن موقعیت دیگر':'+ بل ځای زیاتول',
+            'برای وارد کردن چند موقعیت، هر بار یک خانه متنی اضافه کنید.':'د څو ځایونو لپاره هر ځل د متن یوه خانه اضافه کړئ.',
+            'توضیحات اضافی (اختیاری)':'نور معلومات (اختیاري)','سایر خواسته‌های مشتری':'د پېرودونکي نورې غوښتنې','فورم تکمیل شد؛ اتصال دیتابیس هنوز اضافه نشده و معلومات ذخیره نمی‌شود.':'فورمه بشپړه شوه. ډیټابېس لا نه دی نښلول شوی، نو معلومات نه خوندي کېږي.',
             'نام مکمل مشتری':'د پېرودونکي بشپړ نوم','بودجه خرید':'د پېرود بودیجه','واحد پول':'د پیسو واحد',
             'افغانی (AFN)':'افغانۍ (AFN)','دالر امریکایی (USD)':'امریکایي ډالر (USD)','روپیه پاکستانی (PKR)':'پاکستانۍ روپۍ (PKR)',
             'موقعیت دیگر برای خرید':'د پېرود بل ځای','افزودن موقعیت':'ځای زیاتول','حذف':'لرې کول','ثبت درخواست خرید':'د پېرود غوښتنه ثبتول',
