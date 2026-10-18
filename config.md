@@ -91,6 +91,31 @@ Record parties, agreed sale price or rent, rental period, relevant dates and ter
 ### 3.7 Follow-ups and Reminders
 Provide a task/follow-up list for customer calls, viewings, missing documents, pending offers, and agreement dates. Staff should be able to see their assigned work and overdue follow-ups. Avoid sending messages automatically unless a messaging service is explicitly configured and authorized.
 
+## 3.8 Daily Exchange Rates and Multi-Currency Property Prices
+
+Add a protected Exchange Rates page (نرخ اسعار) for authorized staff to enter daily rates for USD, Pakistani Rupee (PKR), and other configured currencies.
+
+- Use AFN as the default display/comparison currency.
+- Define rate direction explicitly: **1 unit of foreign currency = X AFN**. Example: 1 USD = 70 AFN means the rate is 70 AFN per USD.
+- Record currency, effective date, rate, staff member, and timestamps. Keep a dated history and audit changes; do not erase old rates.
+- Rates are entered manually by authorized staff. Do not fetch rates automatically from an external service unless the project owner asks for that.
+- Rates must be numeric and greater than zero. If a rate is missing, clearly show that conversion is unavailable rather than guessing.
+- A property stores its original asking amount and currency, such as USD 50,000 or PKR 3,000,000. Calculate the AFN equivalent as original amount multiplied by the AFN-per-unit rate.
+- When a new rate is entered for the applicable date, update the calculated AFN equivalent shown in property lists, details, and search results. **Never overwrite the original asking amount or currency.**
+- Customer requests store minimum and maximum budgets plus their currency. Convert property prices and budgets to a common comparison currency before matching. Show both the original amount and AFN equivalent.
+- Rental listings and rental budgets must also store the price period (for example, monthly or yearly). Only compare matching periods.
+- Clearly show which rate date was used. Current rates must not rewrite historical agreement amounts or previously saved historical records.
+- Currency conversion is for property pricing and search only. It must not process payments or money transfers.
+
+### Suggested database structure
+Adapt the existing schema instead of creating duplicates:
+- `currencies`: code, name, symbol, enabled status, and decimal precision.
+- `exchange_rates`: currency code, effective date, AFN-per-unit rate, who entered it, timestamps, and audit history.
+- `properties`: original asking amount, original currency, sale/rent purpose, and rental period where relevant.
+- `customer_requests`: minimum budget, maximum budget, budget currency, and rental period where relevant.
+
+Use exact decimal types and documented rounding rules. Do not use floating-point arithmetic for prices. Matching must check property type, location, availability, listing purpose, rental period, and budget. If the required rate is missing or needs review, mark the match accordingly instead of assuming a rate.
+
 ## 4. Planned Functional Modules
 Develop these modules based on requirements and the existing code:
 1. **Dashboard** — available properties, active buy/rent requests, matches, viewings, pending negotiations, and follow-ups.
